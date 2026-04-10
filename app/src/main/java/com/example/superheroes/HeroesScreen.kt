@@ -26,7 +26,9 @@ import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -40,6 +42,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -72,7 +75,10 @@ fun HeroesList(
             targetState = true
         }
     }
-
+    var showList=heroes
+    fun invertirLista(){
+        showList=heroes.reversed()
+    }
     // Fade in entry animation for the entire list
     AnimatedVisibility(
         visibleState = visibleState,
@@ -83,7 +89,7 @@ fun HeroesList(
         modifier = modifier
     ) {
         LazyColumn(contentPadding = contentPadding) {
-            itemsIndexed(heroes) { index, hero ->
+            itemsIndexed(showList) { index, hero ->
                 HeroListItem(
                     hero = hero,
                     modifier = Modifier
@@ -99,6 +105,16 @@ fun HeroesList(
                             )
                         )
                 )
+                if(index==heroes.size-1){
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Button(onClick = { invertirLista() }) {
+                            Text("Invertir Lista")
+                        }
+                    }
+                }
             }
         }
     }
